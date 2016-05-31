@@ -56,7 +56,7 @@ class Storage(object):
 
     def next_id(self, id_factory):
         if id_factory == int:
-            return self._counter.next()
+            return next(self._counter)
         if id_factory == uuid.UUID:
             return str(uuid.uuid4())
         logger.error('invalid id factory: %s', id_factory)

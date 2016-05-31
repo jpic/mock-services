@@ -34,6 +34,7 @@ setup(
         'funcsigs',
         'requests-mock',
         'setuptools>=17.1',
+        'six',
     ],
     extras_require={
         'test': [

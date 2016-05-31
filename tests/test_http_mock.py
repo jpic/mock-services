@@ -1,4 +1,5 @@
 import logging
+import six
 import unittest
 
 import requests
@@ -101,13 +102,13 @@ class HttpTestCase(unittest.TestCase):
 
         response = requests.get('https://duckduckgo.com/?q=mock-services')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content[:15], '<!DOCTYPE html>')
+        self.assertEqual(response.content[:15], six.b('<!DOCTYPE html>'))
 
         self.assertTrue(start_http_mock())
 
         response = requests.get('https://duckduckgo.com/?q=mock-services')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, 'Coincoin!')
+        self.assertEqual(response.content, six.b('Coincoin!'))
 
     def test_stop_http_mock(self):
 
@@ -117,13 +118,13 @@ class HttpTestCase(unittest.TestCase):
 
         response = requests.get('https://duckduckgo.com/?q=mock-services')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, 'Coincoin!')
+        self.assertEqual(response.content, six.b('Coincoin!'))
 
         self.assertTrue(stop_http_mock())
 
         response = requests.get('https://duckduckgo.com/?q=mock-services')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content[:15], '<!DOCTYPE html>')
+        self.assertEqual(response.content[:15], six.b('<!DOCTYPE html>'))
 
     def test_restart_http_mock(self):
 
@@ -133,7 +134,7 @@ class HttpTestCase(unittest.TestCase):
 
         response = requests.get('https://duckduckgo.com/?q=mock-services')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, 'Coincoin!')
+        self.assertEqual(response.content, six.b('Coincoin!'))
 
         self.assertTrue(stop_http_mock())
 
@@ -142,13 +143,13 @@ class HttpTestCase(unittest.TestCase):
 
         response = requests.get('https://duckduckgo.com/?q=mock-services')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content[:15], '<!DOCTYPE html>')
+        self.assertEqual(response.content[:15], six.b('<!DOCTYPE html>'))
 
         self.assertTrue(start_http_mock())
 
         response = requests.get('https://duckduckgo.com/?q=mock-services')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, 'Coincoin!')
+        self.assertEqual(response.content, six.b('Coincoin!'))
 
         # already started
         self.assertFalse(start_http_mock())
@@ -174,7 +175,7 @@ class HttpTestCase(unittest.TestCase):
 
             response = requests.get('https://duckduckgo.com/?q=mock-services')
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(response.content[:15], '<!DOCTYPE html>')
+            self.assertEqual(response.content[:15], six.b('<!DOCTYPE html>'))
 
         self.assertTrue(is_http_mock_started())
 
@@ -191,7 +192,7 @@ class HttpTestCase(unittest.TestCase):
 
             response = requests.get('https://duckduckgo.com/?q=mock-services')
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(response.content, 'Coincoin!')
+            self.assertEqual(response.content, six.b('Coincoin!'))
 
         self.assertFalse(is_http_mock_started())
 
@@ -204,7 +205,7 @@ class HttpTestCase(unittest.TestCase):
         # mocked
         response = requests.get('https://duckduckgo.com/?q=mock-services')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, 'Coincoin!')
+        self.assertEqual(response.content, six.b('Coincoin!'))
 
         # not mocked but fail
         self.assertRaises(ConnectionError, requests.get,
@@ -227,9 +228,9 @@ class HttpTestCase(unittest.TestCase):
         # mocked
         response = requests.get('https://duckduckgo.com/?q=mock-services')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, 'Coincoin!')
+        self.assertEqual(response.content, six.b('Coincoin!'))
 
         # not mocked but do an external call
         response = requests.get('https://www.google.com/#q=mock-services')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content[:15], '<!doctype html>')
+        self.assertEqual(response.content[:15], six.b('<!doctype html>'))
