@@ -1,0 +1,11 @@
+sudo: false
+language: python
+python:
+- 2.7
+- 3.5
+install:
+- travis_retry pip install -U 'setuptools<20.2' pip
+before_script:
+- make develop
+script:
+- make test
